@@ -1,0 +1,22 @@
+- name: import-cert
+  image: docker.io/apache/flink-kubernetes-operator:latest
+  imagePullPolicy: IfNotPresent
+  command: [ "sh", "-ce","/usr/bin/openssl pkcs12 -export -in /apiserver.local.config/certificates/apiserver.crt -inkey /apiserver.local.config/certificates/apiserver.key -name 1 -passout pass:${WEBHOOK_KEYSTORE_PASSWORD} -out /certs/keystore.p12" ]
+  volumeMounts:
+    - name: keystore
+      mountPath: "/certs"
+    # ToDo: The name: apiservice-cert volume is injected by the OLM into deployment at runtime. The import-cert initContainer may
+    # fail if this mechanism is removed in the future.
+    # https://github.com/operator-framework/operator-lifecycle-manager/blob/master/doc/design/building-your-csv.md#apiservice-serving-certs
+    - name: apiservice-cert
+      # This is the default location for OLM managed cert.
+      mountPath: /apiserver.local.config/certificates
+  env:
+    - name: WEBHOOK_KEYSTORE_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: flink-operator-webhook-secret
+          key: password
+
+
+
