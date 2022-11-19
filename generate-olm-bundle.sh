@@ -28,8 +28,9 @@ CRDDIR="$(dirname "$(realpath "$0")")/crds"
 TAG=${BUNDLE_VERSION}
 BUNDLE_IMG=${DOCKER_REGISTRY}/${DOCKER_ORG}/flink-op-bundle:${TAG}
 CATALOG_IMG=${DOCKER_REGISTRY}/${DOCKER_ORG}/flink-op-catalog:${TAG}
-CATDIR="$(dirname "$(realpath "$0")")/cat/"
-CSV_FILE="${MANIFESTS}/${PACKAGE_NAME}.v${BUNDLE_VERSION}.clusterserviceversion.yaml"
+CATDIR="$(dirname "$(realpath "$0")")/cat"
+#CSV_FILE="${MANIFESTS}/${PACKAGE_NAME}.v${BUNDLE_VERSION}.clusterserviceversion.yaml"
+CSV_FILE="${MANIFESTS}/${PACKAGE_NAME}.clusterserviceversion.yaml"
 
 # Generates bundle from existing CRDs and Resources
 generate_olm_bundle() {
@@ -54,8 +55,9 @@ generate_olm_bundle() {
   # Remove extra files added by operator-sdk
   rm "${MANIFESTS}"/*webhook-service*.yaml
 
-  # Update CSV filename to name traditionally used for OperatorHub
-  mv "${MANIFESTS}"/*.clusterserviceversion.yaml "${CSV_FILE}"
+  # Update CSV filename to name traditionally used for OperatorHub.
+  # Is this step necessary ?
+  # mv "${MANIFESTS}"/*.clusterserviceversion.yaml "${CSV_FILE}"
 
   yq ea -i 'select(fi==0).metadata.annotations = select(fi==1).metadata.annotations | select(fi==0)' "${CSV_FILE}" "${CSV_TEMPLATE}"
   yq ea -i ".spec.install.spec.deployments[0].spec.template.spec.securityContext = {}" "${CSV_FILE}"
@@ -105,7 +107,7 @@ validate_olm_bundle() {
 
 build_fbc_image() {
 rm -rf "${CATDIR}"
-mkdir "${CATDIR}"
+mkdir -p "${CATDIR}"
 CATCONF="${CATDIR}/config.yaml"
   cat <<EOF > "${CATCONF}"
 ---

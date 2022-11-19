@@ -4,4 +4,4 @@ PREVIOUS_BUNDLE_VERSION=1.2.0
 DOCKER_ORG="tedhtchang"
 DOCKER_REGISTRY="docker.io"
 # i.e. flink-kubernetes-operator:1.3.0-rc1
-OPERATOR_IMG=OPERATOR_IMG=docker.io/tedhtchang/myflinkoperator:1.3.0
+OPERATOR_IMG=docker.io/tedhtchang/myflinkoperator:1.3.0

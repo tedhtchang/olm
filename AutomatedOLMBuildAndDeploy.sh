@@ -67,5 +67,5 @@ sleep 40
 kubectl get pods,csv,ip,sub
 
 # Deploy the sample:
-echo "Run an job, use: kubectl create -f https://raw.githubusercontent.com/apache/flink-kubernetes-operator/release-1.2/examples/basic.yaml"
+echo "Run a Flink job, use: kubectl create -f https://raw.githubusercontent.com/apache/flink-kubernetes-operator/release-1.2/examples/basic.yaml"
 
