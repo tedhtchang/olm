@@ -1,7 +1,8 @@
 # OLM Integration
 
-The document describe the automated flink-kubernetes-operator OLM bundle development process for each release.
-
+The document describes the automated flink-kubernetes-operator OLM bundle generation process for each release. For every release, we publish new bundle to two online catalogs. Each catalog has a githube repository that uses similar publishing process.   
+![image](https://user-images.githubusercontent.com/7155778/202823924-8d08561f-1b5f-4e96-9f87-adc171e699c9.png)
+The [community-operators-prod catalog](https://github.com/redhat-openshift-ecosystem/community-operators-prod) comes with OCP (Openshift Container Platform) by default. The [community-operator catalog](https://github.com/k8s-operatorhub/community-operators) can be optionally installed on kubernetes clusters.
 
 ## Install Prereqs
 
